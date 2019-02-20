@@ -14,10 +14,10 @@ max_len = 80
 num_words = 20000
 
 train_list = [i.strip() for i in open('DATA/train.txt', 'r', encoding='utf8')]
-# tokenizer = joblib.load('tokenizer_final.model')
-tokenizer = Tokenizer(num_words=num_words)
-tokenizer.fit_on_texts(train_list)
-joblib.dump(tokenizer,'tokenizer_final.model')
+tokenizer = joblib.load('tokenizer_final.model')
+# tokenizer = Tokenizer(num_words=num_words)
+# tokenizer.fit_on_texts(train_list)
+# joblib.dump(tokenizer,'tokenizer_final.model')
 train_list = tokenizer.texts_to_sequences(train_list)
 x_train = pad_sequences(train_list, max_len)
 one_hot = {"0":[0,1],"1":[1,0]}

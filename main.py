@@ -5,13 +5,16 @@ import re
 import jieba
 import numpy as np
 from flask import Flask, jsonify, request
-from keras.layers import Embedding, Dense, Bidirectional, Conv1D, GRU, BatchNormalization, Activation, Dropout
+from keras.layers import Embedding, Dense, Bidirectional, Conv1D, GRU, BatchNormalization, Activation, Dropout,MaxPool1D
 from keras.models import Sequential
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.externals import joblib
 
 from Attention import Attention
+import tensorflow as tf
 
+global graph,models
+graph = tf.get_default_graph()
 
 class Region(object):
     def __init__(self):
@@ -57,10 +60,14 @@ models = Region()
 server = Flask(__name__)
 
 
-@server.route('/', methods=['post'])
+@server.route('/pos_neg', methods=['post'])
 def reg():
     content = request.values.get('content')
-    result = jsonify({"result": models.prdected(content)})
+    if (content is not None) and (content != ""):
+        with graph.as_default():
+            result = jsonify({"result": models.prdected(content),"status":"1"})
+    else:
+        result = {"result": "", "status": "0"}
     return result
 
 
