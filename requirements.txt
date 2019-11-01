@@ -8,7 +8,7 @@ Click==7.0
 cycler==0.10.0
 Cython==0.28.5
 docutils==0.14
-Flask==0.12.4
+Flask==1.0
 gast==0.2.0
 gensim==3.6.0
 grpcio==1.16.1
